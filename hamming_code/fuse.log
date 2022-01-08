@@ -1,0 +1,17 @@
+Running: C:\Xilinx\14.5\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog_isim_beh.exe -prj C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog_beh.prj work.hamming_code_in_verilog work.glbl 
+ISim P.58f (signature 0x7708f090)
+Number of CPUs detected in this system: 2
+Turning on mult-threading, number of parallel sub-compilation jobs: 4 
+Determining compilation order of HDL files
+Analyzing Verilog file "C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog.v" into library work
+Analyzing Verilog file "C:/Xilinx/14.5/ISE_DS/ISE//verilog/src/glbl.v" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling module hamming_code_in_verilog
+Compiling module glbl
+Time Resolution for simulation is 1ps.
+Waiting for 3 sub-compilation(s) to finish...
+Compiled 2 Verilog Units
+Built simulation executable C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog_isim_beh.exe
+Fuse Memory Usage: 28104 KB
+Fuse CPU Usage: 890 ms

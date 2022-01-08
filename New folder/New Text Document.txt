@@ -1,0 +1,279 @@
+from tkinter import*
+from tkinter import ttk
+import string
+import re
+import math
+import numpy as np
+
+class ITC():
+    def __init__(self,root):
+        self.root = root
+        self.root.title("ITC in python 📙")
+        self.root.geometry("1270x630+0+0")
+        self.root.resizable(False,False)
+        self.root.configure(bg='white')
+
+        ################## all variables here strated
+        self.var_option_selected=StringVar()
+        self.var_m_value=IntVar()
+        self.var_n_value=IntVar()
+        self.var_rs_value=IntVar()
+        ################## all variable end here
+
+
+        heder_label = Label(self.root,text="ITC in python ",font=('times new roman',20,'bold'),bg='#262626',fg='white').place(x=0,y=0,width=1270)
+        option_label_frame = LabelFrame(self.root,text='Select the Given option:',font=('times new roman',12,'bold'),bg='white',fg='black',width=1250,height=60)
+        option_label_frame.place(x=10,y=50)
+
+        option_box = ttk.Combobox(option_label_frame,width=40,textvariable = self.var_option_selected)
+        option_box['values']=(
+            'Given Noise matrix',
+            'Given JPM matrix',
+            'Mutual information'
+        )
+        option_box.place(x=5,y=5)
+
+        option_button =  ttk.Button(option_label_frame,text='Enter.',width=20,command=self.calculate)
+        option_button.place(x=280,y=4)
+        futer = Label(self.root,text='Develoed by the umesha ramesha hugger ',font=('times new roman',13),bg='#262626',fg='white',height=2)
+        futer.pack(side=BOTTOM,fill=X)
+    def calculate(self):
+
+        main_label_frame = LabelFrame(self.root,width=1250,height=450,bg='white')
+        main_label_frame.place(x=10,y=120)
+
+        order_label=Label(main_label_frame,text='Enter the order of matrix:',bg='white',font=('times new roman',12,'bold'))
+        order_label.place(x=10,y=10)
+
+        m_label = Label(main_label_frame,text="M",font=('times new roman',12,'bold'),bg='white').place(x=200,y=10)
+        m_entry = ttk.Entry(main_label_frame,width=10,textvariable=self.var_m_value)
+        m_entry.place(x=230,y=10)
+        n_label = Label(main_label_frame,text="N",font=('times new roman',12,'bold'),bg='white').place(x=305,y=10)
+        n_entry = ttk.Entry(main_label_frame,width=10,textvariable=self.var_n_value)
+        n_entry.place(x=330,y=10)
+
+        matrix_label=Label(main_label_frame,text='Enter the matrix:',bg='white',font=('times new roman',12,'bold'))
+        matrix_label.place(x=10,y=50)
+        
+        def matrix():
+            value1 = ''
+            list_value = []
+            #print(matrix_entry.get('1.0',END))
+            matrix_values = (matrix_entry.get('1.0',END))
+            for i in range(int(len(matrix_values))):
+                if matrix_values[i]!=';':
+                    value1 = value1 + matrix_values[i]
+                else:
+                    list_value.append(value1)
+                    value1 = ''
+            removetable = str.maketrans('','','=_{\n\t}abcdefchijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+            matrix = [s.translate(removetable) for s in list_value]
+            print(matrix[0])
+            m = matrix[0].split(',')
+            p_y_by_x_matrix = []  
+            for i in range(len(m)):
+                item = m[i].strip()
+                p_y_by_x_matrix.append(item)
+        
+
+            #converting the string list to the inter list 
+            p_y_by_x_matrix = list(map(float,p_y_by_x_matrix))
+            print("the str list to float p_y_by_x_matrix")
+            print(p_y_by_x_matrix)
+
+            mul = self.var_m_value.get() * self.var_n_value.get()
+            print("the mul value is given below")
+            print(mul)
+            px_value = p_y_by_x_matrix[mul::]
+            for i in range(self.var_m_value.get()):
+                p_y_by_x_matrix.pop()
+
+            p_y_by_x_matrix = np.array(p_y_by_x_matrix)
+            print("The p_y_by_x_matrix is given below the list is converted into the array")
+            print(p_y_by_x_matrix)
+
+            p_y_by_x_matrix = p_y_by_x_matrix.reshape(self.var_m_value.get() , self.var_n_value.get())
+            print("this the 5 * 4 array p_y_by_x_matrix ")
+            print(p_y_by_x_matrix)
+
+            
+            
+
+            print("The value of the px is given below")
+            print(px_value)
+
+            print("after removing the lost value the given pp_y_by_x_matrix is given below")
+            print(p_y_by_x_matrix)
+
+
+
+            final_matrix = p_y_by_x_matrix.reshape(self.var_m_value.get(),self.var_n_value.get())
+            print("The final matrix is given below")
+            print(final_matrix)
+
+            
+            px = px_value
+        
+            h_x = 0
+            for i in range(self.var_m_value.get()):
+                log_result = float(px[i]) * math.log2(1/float(px[i]))
+                h_x = h_x + log_result
+            print("The value of the h_x is given below")
+            print(h_x)
+
+            px = list(map(float,px))
+            print('the list to array is px is given below')
+            print(px)
+            pxy =  final_matrix * px 
+            print('the pxy matrix is given below')
+            print(pxy)
+            
+            
+            #pxy = []# this is the jpm natrix
+            #for i in range(self.var_n_value.get()):
+            #    intermadiate_term = []
+            #    for j in range(self.var_m_value.get()):
+            #        pxy_px = float(final_matrix[i][j]) * float(px[i])
+            #        intermadiate_term.append(pxy_px)
+            #    pxy.append(intermadiate_term)
+            #print(pxy)  # this is the jpm matrix
+
+            py_item=0
+            py = []
+            for j in range(self.var_m_value.get()):
+                for i in range(self.var_n_value.get()):
+                    py_item = py_item + float(pxy[i][j])
+                py.append(py_item)
+                py_item = 0
+            print(py)
+
+            h_y = 0
+            for i in range(self.var_m_value.get()):
+                h_y = h_y + float(py[i]) * math.log2(1/float(py[i]))
+            print("the value of the hy is given below")
+            print(h_y)
+            h_y_by_x = 0
+            for i in range(self.var_n_value.get()):
+                for j in range(self.var_m_value.get()):
+                    h_y_by_x = h_y_by_x + (float(pxy[i][j]) * math.log2(1/float(final_matrix[i][j])))
+            print("the value of the h_y_by_x is "+str(h_y_by_x))
+
+            p_x_by_y = []
+            for i in range(self.var_n_value.get()):
+                p_x_by_y_intermidiate_term = []
+                for j in range(self.var_m_value.get()):
+                    p_x_by_y_item = float(pxy[i][j]) / float(py[i]) 
+                    p_x_by_y_intermidiate_term.append(p_x_by_y_item)
+                p_x_by_y.append(p_x_by_y_intermidiate_term)
+            h_x_by_y = 0
+
+            for i in range(self.var_n_value.get()):
+                for j in range(self.var_m_value.get()):
+                    h_x_by_y = h_x_by_y + float(pxy[i][j]) * (math.log2(1/float(p_x_by_y[i][j])))
+            print("Th value of the h_x_by_y is given below")
+            print(h_x_by_y)
+            print("the datatransmision rate is given below")
+         
+            dtx = float(self.var_rs_value.get()) * (float(h_x) - float(h_x_by_y))
+            dty = float(self.var_rs_value.get()) * (float(h_y) - float(h_y_by_x))
+            print("the value of the dtx is given below:")
+            print(dtx)
+            print("The value of the dty is given below")
+            print(dty)
+
+            cx = float(self.var_rs_value.get()) * (float(math.log2(self.var_n_value.get())) - float(h_x_by_y))
+            cy = float(self.var_rs_value.get()) * (float(math.log2(self.var_m_value.get()) - float(h_y_by_x)))
+            print("THE VALUE OF THE CX IS GIVEN BELOW")
+            print(cx)
+            print("The value of the cy is given below")
+            print(cy)
+
+            print("The value of the channel efficieny is given below: for the x value ")
+            he_x = dtx/cx
+            he_x_in_pertage = he_x *100
+            print(he_x_in_pertage)
+            print("The value of the channel efficincy is given below: for the y value ")
+            he_y = dty/cy
+            he_y_in_pertage = he_y *100
+            print(he_y_in_pertage)
+
+            print("The cannel redundecy is gien below: for the x value")
+            rex = (1-he_x)*100
+            print(rex)
+            print("The value of the redundecy for the y value is given ")
+            rey = (1-he_y)*100
+            print(rey)
+
+      
+            
+            show_labelFrame=LabelFrame(main_label_frame,width=800,height=380,bg='white')
+            show_labelFrame.place(x=430,y=10)
+
+            h_x_label = Label(show_labelFrame,text= "The value of the h(x) : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=10)
+            h_x_show = Label(show_labelFrame,text = f"{str(h_x)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            h_x_show.place(x=200,y=12)
+
+            h_y_label = Label(show_labelFrame,text= "The value of the h(y) : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=40)
+            h_y_show = Label(show_labelFrame,text = f"{str(h_y)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            h_y_show.place(x=200,y=42)
+
+            h_y_by_x_label = Label(show_labelFrame,text= "The value of the h(y/x) : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=70)
+            h_y_by_x_show = Label(show_labelFrame,text = f"{str(h_y_by_x)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            h_y_by_x_show.place(x=200,y=72)
+
+            h_x_by_y_label = Label(show_labelFrame,text= "The value of the h(x/y) : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=100)
+            h_x_by_y_show = Label(show_labelFrame,text = f"{str(h_x_by_y)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            h_x_by_y_show.place(x=200,y=102)
+
+            dtx_label = Label(show_labelFrame,text= "The value of the Dt for x : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=130)
+            dtx_show = Label(show_labelFrame,text = f"{str(dtx)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            dtx_show.place(x=200,y=132)
+################change the y value in the place function
+            dty_label = Label(show_labelFrame,text= "The value of the Dt for y : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=160)
+            dty_show = Label(show_labelFrame,text = f"{str(dty)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            dty_show.place(x=200,y=162)
+
+            cx_label = Label(show_labelFrame,text= "The value of the Cx for x : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=190)
+            cx_label = Label(show_labelFrame,text = f"{str(cx)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            cx_label.place(x=200,y=192)
+
+            cy_label = Label(show_labelFrame,text= "The value of the Cy for u : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=220)
+            cy_label = Label(show_labelFrame,text = f"{str(cy)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            cy_label.place(x=200,y=222)
+
+            he_x_in_pertage_label = Label(show_labelFrame,text= "The value of the re for x : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=250)
+            he_x_in_pertage_label = Label(show_labelFrame,text = f"{str(he_x_in_pertage)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            he_x_in_pertage_label.place(x=200,y=252)
+
+            he_y_in_pertage_label = Label(show_labelFrame,text= "The value of the re for 5 : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=280)
+            he_y_in_pertage_label = Label(show_labelFrame,text = f"{str(he_y_in_pertage)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            he_y_in_pertage_label.place(x=200,y=282)
+
+            rex_label = Label(show_labelFrame,text= "The value of the re for x : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=310)
+            rex_label = Label(show_labelFrame,text = f"{str(rex)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            rex_label.place(x=200,y=312)
+
+            rey_label = Label(show_labelFrame,text= "The value of the re for y : ",font = ('times new roman',12,'bold'),bg='white').place(x=10,y=340)
+            rey_label = Label(show_labelFrame,text = f"{str(rey)}",font = ('times new roman',12,'bold'),relief = GROOVE,width=60,height=1,bg='white')
+            rey_label.place(x=200,y=342)
+
+
+        matrix_entry = Text(main_label_frame,width=50,height=10,bd=1,bg='lightyellow',relief = GROOVE)
+        matrix_entry.place(x=10,y=100)
+        matrix_entry_button=ttk.Button(main_label_frame,text='Enter',width=20,command=matrix)
+        matrix_entry_button.place(x=10,y=330)
+    
+
+        matrix_label=Label(main_label_frame,text='Enter the rs value:',bg='white',font=('times new roman',12,'bold'))
+        matrix_label.place(x=10,y=290)
+
+        rs_label = Label(main_label_frame,text="rs",font=('times new roman',12,'bold'),bg='white').place(x=140,y=290)
+        rs_entry = ttk.Entry(main_label_frame,width=10,textvariable=self.var_rs_value)
+        rs_entry.place(x=200,y=290)
+
+ 
+
+if __name__ == '__main__':
+    root = Tk()
+    wn = ITC(root)
+    root.mainloop()

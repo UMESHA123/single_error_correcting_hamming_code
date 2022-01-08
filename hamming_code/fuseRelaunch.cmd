@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog_isim_beh.exe" -prj "C:/Users/acer/Desktop/practice verilog/hamming_code/hamming_code_in_verilog_beh.prj" "work.hamming_code_in_verilog" "work.glbl" 

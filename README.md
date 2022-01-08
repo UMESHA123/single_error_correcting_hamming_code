@@ -22,6 +22,9 @@ this the circute of the hamming code error curecter
 
 
 the hamming code programing in verilog
+
+
+
 `timescale 1ns / 1ps
 
 module hamming_code_in_verilog(d_out,x2,x4,x6,x7,x8,x9,x10,x11,x12,x13,x16,x19,x22,x23,x24,x25,x26,error_input_pin,d_in);
@@ -142,6 +145,10 @@ hamming code in python
 
 
 <img width="952" alt="hamming code ckt" src="https://user-images.githubusercontent.com/73009807/148645766-3dd5950c-8b9b-4c09-8b14-987b8e26901d.png">
+
+
+
+
 
 
 from tkinter import*
